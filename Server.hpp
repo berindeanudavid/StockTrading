@@ -10,7 +10,7 @@
 
 class Server{
     private:
-        int server_money;
+        int server_money=100000000;
         std::unordered_map<std::string,user_info> users_database;
         std::unordered_map<std::string,asset_info> assets_database;
     public:
@@ -25,4 +25,6 @@ class Server{
         void buyCrypto(std::string username,std::string ticker_symbol,int amount);
         void sellCrypto(std::string username,std::string ticker_symbol,int amount);
         void addAssetToWatchListUser(std::string username,std::string ticker_symbol);
+        void updateAssetPrice(std::string ticker_symbol,int price_difference);
+        std::vector<std::string> readMessages(std::string username);
 };

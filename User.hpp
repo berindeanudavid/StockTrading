@@ -12,4 +12,5 @@ class User{
         void logout();
         void cashDeposit(int amount);
         void searchAssetByTickerSymbol(std::string ticker_symbol);
+        void readMessages();
 };

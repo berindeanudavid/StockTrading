@@ -3,6 +3,7 @@
 #include<string>
 #include<unordered_map>
 #include<stdexcept>
+#include<unordered_set>
 #include "ITradingStrategy.hpp"
 
 struct asset_info{
@@ -15,7 +16,7 @@ struct asset_info{
 struct user_info{
     std::unordered_map<std::string,int> owned_assets;
     std::string password;
-    std::vector<std::string> watch_list;
+    std::unordered_set<std::string> watch_list;
     std::vector<std::string> transaction_history;
     std::vector<std::string> automated_transactions;
     bool isLoggedIn;

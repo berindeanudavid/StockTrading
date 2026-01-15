@@ -65,3 +65,14 @@ void User::searchAssetByTickerSymbol(std::string ticker_symbol){
     catch(const AssetDoesNotExist& e){}
     catch(const std::exception& e){}
 }
+
+void User::readMessages(){
+    if(this->session_username==""){
+        std::cout<<"You are not logged in!";
+        return;
+    }
+    std::vector<std::string> messages=this->p_server->readMessages(this->session_username);
+    for(std::string m:messages){
+        std::cout<<m<<"\n";
+    }
+}

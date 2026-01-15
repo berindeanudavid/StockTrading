@@ -73,5 +73,26 @@ void Server::addAssetToWatchListUser(std::string username,std::string ticker_sym
     if(this->assets_database.find(ticker_symbol)==this->assets_database.end()){
         throw AssetDoesNotExist("Asset does not exist in the database!");
     }
-    this->users_database.at(username).watch_list.push_back(ticker_symbol);
+    this->users_database.at(username).watch_list.insert(ticker_symbol);
+}
+
+void Server::updateAssetPrice(std::string ticker_symbol,int price_difference){
+    if(isWorkTime()){
+        //you can also substract with this formula: by entering negative values:
+        assets_database.at(ticker_symbol).price_of_asset+=price_difference;
+        std::for_each(this->users_database.begin(),this->users_database.end(),[&](std::pair<std::string,user_info>pair){
+            if(pair.second.watch_list.contains(ticker_symbol)){
+                pair.second.stored_messages.push_back(ticker_symbol+" changed by: "+std::to_string(price_difference));
+            }
+        });
+    }
+    else{
+        std::cout<<"You are working overhours. Take a break and come back at (9AM-18PM Monday to Friday).\n";
+    }
+}
+
+std::vector<std::string> Server::readMessages(std::string username){
+    std::vector<std::string> messages=this->users_database.at(username).stored_messages;
+    this->users_database.at(username).stored_messages.clear();
+    return messages;
 }
